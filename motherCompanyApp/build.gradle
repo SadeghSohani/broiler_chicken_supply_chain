@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+ext {
+    javaMainClass = "application.java.App"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.google.guava:guava:31.1-jre'
+    implementation 'org.hyperledger.fabric:fabric-gateway-java:2.2.4'
+}
+
+application {
+    // Define the main class for the application.
+    mainClassName = 'org.example.App'
+}
+
+// task for running the app after building dependencies
+task runApp(type: Exec) {
+    dependsOn build
+    group = "Execution"
+    description = "Run the main class with ExecTask"
+    commandLine "java", "-classpath", sourceSets.main.runtimeClasspath.getAsPath(), javaMainClass
+}
