@@ -1,7 +1,3 @@
-/*
- * SPDX-License-Identifier: Apache-2.0
- */
-
 package org.example;
 
 import java.util.ArrayList;
@@ -50,11 +46,11 @@ public final class AssetTransfer implements ContractInterface {
      * @param motherCompany
      */
     @Transaction(intent = Transaction.TYPE.SUBMIT)
-    public void InitLedger(final Context ctx, final String motherCompany) {
+    public void InitLedger(final Context ctx, final Integer chickensCount) {
         ChaincodeStub stub = ctx.getStub();
 
-        for(int i =0; i < 100; i++){
-            Asset transfer = CreateAsset(ctx, "chicken" + i, motherCompany, "", "", "", motherCompany);
+        for(int i =0; i < chickensCount; i++){
+            Asset transfer = CreateAsset(ctx, "chicken" + i, "Zarbal", "", "", "", "Zarbal");
             String assetState = genson.serialize(transfer);
             stub.putStringState("chicken" + i, assetState);
         }
@@ -236,4 +232,3 @@ public final class AssetTransfer implements ContractInterface {
         return response;
     }
 }
-
